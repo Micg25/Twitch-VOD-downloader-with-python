@@ -42,7 +42,7 @@ async def main():
                 async with session.get(link,headers=headers) as resp:
                     text = await resp.text()
                     soup = BeautifulSoup(text, "html.parser")
-                    div = soup.find('meta', {"name": 'twitter:image'}).get('content') # getting the VOD id which is needed to forge the m3u8 url 
+                    div = soup.find('meta', {"name": 'twitter:image'}).get('content') or soup.find('meta', {"name": 'tw-image'}) # getting the VOD id which is needed to forge the m3u8 url 
                     pattern = r"https://static-cdn\.jtvnw\.net/cf_vods/([^/]+)/([^/]+)/" 
                     dom = re.search(pattern, div).group(1)
                     vod_id = re.search(pattern, div).group(2)
